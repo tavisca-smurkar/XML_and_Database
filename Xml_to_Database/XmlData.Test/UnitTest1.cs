@@ -12,7 +12,23 @@ namespace XmlData.Test
         {
             try
             {
-              bool result =   ValidationClass.ValidateCompany("0");
+                bool result = ValidationClass.ValidateCompanyId("0");
+                Assert.AreEqual(result, true);
+            }
+            catch (Exception e)
+            {
+                string str = e.Message;
+            }
+        }
+
+
+
+        [TestMethod]
+        public void TestForName()
+        {
+            try
+            {
+                bool result = ValidationClass.ValidCompanyName("12abc");
                 Assert.AreEqual(result, true);
             }
             catch (Exception e)

@@ -33,5 +33,16 @@ namespace DataContextClassLibrary.Properties {
                 return ((string)(this["XMLtoDATABASEConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=SHREEKESHM\\MSSQLSERVER2012;Initial Catalog=XML_to_DATABASE;User ID=sa" +
+            ";Password=test123!@#")]
+        public string XML_to_DATABASEConnectionString {
+            get {
+                return ((string)(this["XML_to_DATABASEConnectionString"]));
+            }
+        }
     }
 }

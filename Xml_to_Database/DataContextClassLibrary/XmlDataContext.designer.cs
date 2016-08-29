@@ -22,7 +22,7 @@ namespace DataContextClassLibrary
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="XMLtoDATABASE")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="XML_to_DATABASE")]
 	public partial class XmlDataContextDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -36,13 +36,19 @@ namespace DataContextClassLibrary
     partial void InsertDepartment(Department instance);
     partial void UpdateDepartment(Department instance);
     partial void DeleteDepartment(Department instance);
+    partial void InsertDepartment1(Department1 instance);
+    partial void UpdateDepartment1(Department1 instance);
+    partial void DeleteDepartment1(Department1 instance);
     partial void InsertEmployee(Employee instance);
     partial void UpdateEmployee(Employee instance);
     partial void DeleteEmployee(Employee instance);
+    partial void InsertEmployee1(Employee1 instance);
+    partial void UpdateEmployee1(Employee1 instance);
+    partial void DeleteEmployee1(Employee1 instance);
     #endregion
 		
 		public XmlDataContextDataContext() : 
-				base(global::DataContextClassLibrary.Properties.Settings.Default.XMLtoDATABASEConnectionString, mappingSource)
+				base(global::DataContextClassLibrary.Properties.Settings.Default.XML_to_DATABASEConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -122,6 +128,10 @@ namespace DataContextClassLibrary
 		
 		private string _CompanyName;
 		
+		private EntitySet<Department1> _Department1s;
+		
+		private EntitySet<Employee1> _Employee1s;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -134,6 +144,8 @@ namespace DataContextClassLibrary
 		
 		public Company()
 		{
+			this._Department1s = new EntitySet<Department1>(new Action<Department1>(this.attach_Department1s), new Action<Department1>(this.detach_Department1s));
+			this._Employee1s = new EntitySet<Employee1>(new Action<Employee1>(this.attach_Employee1s), new Action<Employee1>(this.detach_Employee1s));
 			OnCreated();
 		}
 		
@@ -157,7 +169,7 @@ namespace DataContextClassLibrary
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyName", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CompanyName", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
 		public string CompanyName
 		{
 			get
@@ -174,6 +186,32 @@ namespace DataContextClassLibrary
 					this.SendPropertyChanged("CompanyName");
 					this.OnCompanyNameChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Department1", Storage="_Department1s", ThisKey="Company_Id", OtherKey="Company_Id")]
+		public EntitySet<Department1> Department1s
+		{
+			get
+			{
+				return this._Department1s;
+			}
+			set
+			{
+				this._Department1s.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Employee1", Storage="_Employee1s", ThisKey="Company_Id", OtherKey="Company_Id")]
+		public EntitySet<Employee1> Employee1s
+		{
+			get
+			{
+				return this._Employee1s;
+			}
+			set
+			{
+				this._Employee1s.Assign(value);
 			}
 		}
 		
@@ -196,6 +234,30 @@ namespace DataContextClassLibrary
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+		
+		private void attach_Department1s(Department1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Department1s(Department1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
+		
+		private void attach_Employee1s(Employee1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = this;
+		}
+		
+		private void detach_Employee1s(Employee1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.Company = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Department")]
@@ -208,7 +270,11 @@ namespace DataContextClassLibrary
 		
 		private string _DepartmentName;
 		
+		private long _Departments_Id;
+		
 		private EntitySet<Employee> _Employees;
+		
+		private EntityRef<Department1> _Department1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -218,11 +284,14 @@ namespace DataContextClassLibrary
     partial void OnIDChanged();
     partial void OnDepartmentNameChanging(string value);
     partial void OnDepartmentNameChanged();
+    partial void OnDepartments_IdChanging(long value);
+    partial void OnDepartments_IdChanged();
     #endregion
 		
 		public Department()
 		{
 			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
+			this._Department1 = default(EntityRef<Department1>);
 			OnCreated();
 		}
 		
@@ -266,6 +335,30 @@ namespace DataContextClassLibrary
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Departments_Id", DbType="BigInt NOT NULL")]
+		public long Departments_Id
+		{
+			get
+			{
+				return this._Departments_Id;
+			}
+			set
+			{
+				if ((this._Departments_Id != value))
+				{
+					if (this._Department1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDepartments_IdChanging(value);
+					this.SendPropertyChanging();
+					this._Departments_Id = value;
+					this.SendPropertyChanged("Departments_Id");
+					this.OnDepartments_IdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Department_Employee", Storage="_Employees", ThisKey="ID", OtherKey="DepartmentId")]
 		public EntitySet<Employee> Employees
 		{
@@ -276,6 +369,40 @@ namespace DataContextClassLibrary
 			set
 			{
 				this._Employees.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Department1_Department", Storage="_Department1", ThisKey="Departments_Id", OtherKey="Departments_Id", IsForeignKey=true)]
+		public Department1 Department1
+		{
+			get
+			{
+				return this._Department1.Entity;
+			}
+			set
+			{
+				Department1 previousValue = this._Department1.Entity;
+				if (((previousValue != value) 
+							|| (this._Department1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Department1.Entity = null;
+						previousValue.Departments.Remove(this);
+					}
+					this._Department1.Entity = value;
+					if ((value != null))
+					{
+						value.Departments.Add(this);
+						this._Departments_Id = value.Departments_Id;
+					}
+					else
+					{
+						this._Departments_Id = default(long);
+					}
+					this.SendPropertyChanged("Department1");
+				}
 			}
 		}
 		
@@ -313,18 +440,37 @@ namespace DataContextClassLibrary
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Departments")]
-	public partial class Department1
+	public partial class Department1 : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private long _Departments_Id;
 		
 		private long _Company_Id;
 		
+		private EntitySet<Department> _Departments;
+		
+		private EntityRef<Company> _Company;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDepartments_IdChanging(long value);
+    partial void OnDepartments_IdChanged();
+    partial void OnCompany_IdChanging(long value);
+    partial void OnCompany_IdChanged();
+    #endregion
+		
 		public Department1()
 		{
+			this._Departments = new EntitySet<Department>(new Action<Department>(this.attach_Departments), new Action<Department>(this.detach_Departments));
+			this._Company = default(EntityRef<Company>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Departments_Id", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Departments_Id", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
 		public long Departments_Id
 		{
 			get
@@ -335,7 +481,11 @@ namespace DataContextClassLibrary
 			{
 				if ((this._Departments_Id != value))
 				{
+					this.OnDepartments_IdChanging(value);
+					this.SendPropertyChanging();
 					this._Departments_Id = value;
+					this.SendPropertyChanged("Departments_Id");
+					this.OnDepartments_IdChanged();
 				}
 			}
 		}
@@ -351,9 +501,96 @@ namespace DataContextClassLibrary
 			{
 				if ((this._Company_Id != value))
 				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompany_IdChanging(value);
+					this.SendPropertyChanging();
 					this._Company_Id = value;
+					this.SendPropertyChanged("Company_Id");
+					this.OnCompany_IdChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Department1_Department", Storage="_Departments", ThisKey="Departments_Id", OtherKey="Departments_Id")]
+		public EntitySet<Department> Departments
+		{
+			get
+			{
+				return this._Departments;
+			}
+			set
+			{
+				this._Departments.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Department1", Storage="_Company", ThisKey="Company_Id", OtherKey="Company_Id", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Department1s.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Department1s.Add(this);
+						this._Company_Id = value.Company_Id;
+					}
+					else
+					{
+						this._Company_Id = default(long);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Departments(Department entity)
+		{
+			this.SendPropertyChanging();
+			entity.Department1 = this;
+		}
+		
+		private void detach_Departments(Department entity)
+		{
+			this.SendPropertyChanging();
+			entity.Department1 = null;
 		}
 	}
 	
@@ -373,7 +610,11 @@ namespace DataContextClassLibrary
 		
 		private long _Salary;
 		
+		private long _Employees_Id;
+		
 		private EntityRef<Department> _Department;
+		
+		private EntityRef<Employee1> _Employee1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -389,11 +630,14 @@ namespace DataContextClassLibrary
     partial void OnLastNameChanged();
     partial void OnSalaryChanging(long value);
     partial void OnSalaryChanged();
+    partial void OnEmployees_IdChanging(long value);
+    partial void OnEmployees_IdChanged();
     #endregion
 		
 		public Employee()
 		{
 			this._Department = default(EntityRef<Department>);
+			this._Employee1 = default(EntityRef<Employee1>);
 			OnCreated();
 		}
 		
@@ -501,6 +745,30 @@ namespace DataContextClassLibrary
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Employees_Id", DbType="BigInt NOT NULL")]
+		public long Employees_Id
+		{
+			get
+			{
+				return this._Employees_Id;
+			}
+			set
+			{
+				if ((this._Employees_Id != value))
+				{
+					if (this._Employee1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnEmployees_IdChanging(value);
+					this.SendPropertyChanging();
+					this._Employees_Id = value;
+					this.SendPropertyChanged("Employees_Id");
+					this.OnEmployees_IdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Department_Employee", Storage="_Department", ThisKey="DepartmentId", OtherKey="ID", IsForeignKey=true)]
 		public Department Department
 		{
@@ -535,6 +803,40 @@ namespace DataContextClassLibrary
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee1_Employee", Storage="_Employee1", ThisKey="Employees_Id", OtherKey="Employees_Id", IsForeignKey=true)]
+		public Employee1 Employee1
+		{
+			get
+			{
+				return this._Employee1.Entity;
+			}
+			set
+			{
+				Employee1 previousValue = this._Employee1.Entity;
+				if (((previousValue != value) 
+							|| (this._Employee1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Employee1.Entity = null;
+						previousValue.Employees.Remove(this);
+					}
+					this._Employee1.Entity = value;
+					if ((value != null))
+					{
+						value.Employees.Add(this);
+						this._Employees_Id = value.Employees_Id;
+					}
+					else
+					{
+						this._Employees_Id = default(long);
+					}
+					this.SendPropertyChanged("Employee1");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -557,18 +859,37 @@ namespace DataContextClassLibrary
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Employees")]
-	public partial class Employee1
+	public partial class Employee1 : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private long _Employees_Id;
 		
 		private long _Company_Id;
 		
+		private EntitySet<Employee> _Employees;
+		
+		private EntityRef<Company> _Company;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnEmployees_IdChanging(long value);
+    partial void OnEmployees_IdChanged();
+    partial void OnCompany_IdChanging(long value);
+    partial void OnCompany_IdChanged();
+    #endregion
+		
 		public Employee1()
 		{
+			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
+			this._Company = default(EntityRef<Company>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Employees_Id", DbType="BigInt NOT NULL")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Employees_Id", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
 		public long Employees_Id
 		{
 			get
@@ -579,7 +900,11 @@ namespace DataContextClassLibrary
 			{
 				if ((this._Employees_Id != value))
 				{
+					this.OnEmployees_IdChanging(value);
+					this.SendPropertyChanging();
 					this._Employees_Id = value;
+					this.SendPropertyChanged("Employees_Id");
+					this.OnEmployees_IdChanged();
 				}
 			}
 		}
@@ -595,9 +920,96 @@ namespace DataContextClassLibrary
 			{
 				if ((this._Company_Id != value))
 				{
+					if (this._Company.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCompany_IdChanging(value);
+					this.SendPropertyChanging();
 					this._Company_Id = value;
+					this.SendPropertyChanged("Company_Id");
+					this.OnCompany_IdChanged();
 				}
 			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee1_Employee", Storage="_Employees", ThisKey="Employees_Id", OtherKey="Employees_Id")]
+		public EntitySet<Employee> Employees
+		{
+			get
+			{
+				return this._Employees;
+			}
+			set
+			{
+				this._Employees.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Company_Employee1", Storage="_Company", ThisKey="Company_Id", OtherKey="Company_Id", IsForeignKey=true)]
+		public Company Company
+		{
+			get
+			{
+				return this._Company.Entity;
+			}
+			set
+			{
+				Company previousValue = this._Company.Entity;
+				if (((previousValue != value) 
+							|| (this._Company.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Company.Entity = null;
+						previousValue.Employee1s.Remove(this);
+					}
+					this._Company.Entity = value;
+					if ((value != null))
+					{
+						value.Employee1s.Add(this);
+						this._Company_Id = value.Company_Id;
+					}
+					else
+					{
+						this._Company_Id = default(long);
+					}
+					this.SendPropertyChanged("Company");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Employees(Employee entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee1 = this;
+		}
+		
+		private void detach_Employees(Employee entity)
+		{
+			this.SendPropertyChanging();
+			entity.Employee1 = null;
 		}
 	}
 }
