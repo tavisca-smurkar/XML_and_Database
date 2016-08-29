@@ -1,7 +1,0 @@
-D:\XML_Project\Xml_to_Database\Validation\bin\Debug\Validation.dll
-D:\XML_Project\Xml_to_Database\Validation\bin\Debug\Validation.pdb
-D:\XML_Project\Xml_to_Database\Validation\bin\Debug\DataContextClassLibrary.dll
-D:\XML_Project\Xml_to_Database\Validation\bin\Debug\DataContextClassLibrary.pdb
-D:\XML_Project\Xml_to_Database\Validation\obj\Debug\Validation.csprojResolveAssemblyReference.cache
-D:\XML_Project\Xml_to_Database\Validation\obj\Debug\Validation.dll
-D:\XML_Project\Xml_to_Database\Validation\obj\Debug\Validation.pdb
