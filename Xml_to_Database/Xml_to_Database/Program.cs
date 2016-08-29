@@ -7,6 +7,7 @@ using DataContextClassLibrary;
 using System.Data;
 using System.Data.SqlClient;
 using Xml_to_Database;
+using System.Xml.Linq;
 
 namespace Xml_to_Database
 {
@@ -62,7 +63,7 @@ namespace Xml_to_Database
                 }
 
 
-
+            }
 
                 using (SqlBulkCopy bulkcopy_1 = new SqlBulkCopy(datacontext.Connection.ConnectionString))
                 {
@@ -250,11 +251,37 @@ namespace Xml_to_Database
                 }
 
 
+                XDocument xdox = new XDocument(new XElement("Company",
+                from c in datacontext.Companies
+                select new XElement("CompanyName", c.CompanyName),
+                       new XElement("Employees",
+                                    from e in datacontext.Employees
+                                    select new XElement("Employee",
+                                                new XElement("ID", e.ID),
+                                                new XElement("DepartmentId", e.DepartmentId),
+                                                new XElement("FirstName", e.FirstName),
+                                                new XElement("LastName", e.LastName),
+                                                new XElement("Salary", e.Salary)
+                                                        )
+                                   ),
+                       new XElement("Departments",
+                                    from d in datacontext.Departments
+                                    select new XElement("Department",
+                                                new XElement("ID", d.ID),
+                                                new XElement("DepartmentName", d.DepartmentName)
+
+                                                            )
+                                     )
+                       )
+                       );
 
 
-
+                Console.WriteLine(xdox);
+                xdox.Save(@"D:\XML_Project\Xml_to_Database\Xml_to_Database\Database\Companies.xml");
 
             }
-        }
+        
+
     }
 }
+
