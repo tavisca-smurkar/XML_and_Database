@@ -1,0 +1,5 @@
+D:\XML_Project\Xml_to_Database\DataContextClassLibrary\bin\Debug\DataContextClassLibrary.dll.config
+D:\XML_Project\Xml_to_Database\DataContextClassLibrary\bin\Debug\DataContextClassLibrary.dll
+D:\XML_Project\Xml_to_Database\DataContextClassLibrary\bin\Debug\DataContextClassLibrary.pdb
+D:\XML_Project\Xml_to_Database\DataContextClassLibrary\obj\Debug\DataContextClassLibrary.dll
+D:\XML_Project\Xml_to_Database\DataContextClassLibrary\obj\Debug\DataContextClassLibrary.pdb

@@ -1,0 +1,10 @@
+D:\XML_Project\Xml_to_Database\XmlData.Test\bin\Debug\XmlData.Test.dll
+D:\XML_Project\Xml_to_Database\XmlData.Test\bin\Debug\XmlData.Test.pdb
+D:\XML_Project\Xml_to_Database\XmlData.Test\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\XML_Project\Xml_to_Database\XmlData.Test\bin\Debug\Validation.dll
+D:\XML_Project\Xml_to_Database\XmlData.Test\bin\Debug\DataContextClassLibrary.dll
+D:\XML_Project\Xml_to_Database\XmlData.Test\bin\Debug\Validation.pdb
+D:\XML_Project\Xml_to_Database\XmlData.Test\bin\Debug\DataContextClassLibrary.pdb
+D:\XML_Project\Xml_to_Database\XmlData.Test\obj\Debug\XmlData.Test.csprojResolveAssemblyReference.cache
+D:\XML_Project\Xml_to_Database\XmlData.Test\obj\Debug\XmlData.Test.dll
+D:\XML_Project\Xml_to_Database\XmlData.Test\obj\Debug\XmlData.Test.pdb

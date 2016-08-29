@@ -1,1 +1,9 @@
-D:\XML_Project\Xml_to_Database\Xml_to_Database\bin\Debug\Xml_to_Database.exe.config
+D:\XML_Project\Xml_to_Database\Xml_to_Database\bin\Debug\Xml_to_Database.exe
+D:\XML_Project\Xml_to_Database\Xml_to_Database\bin\Debug\Xml_to_Database.pdb
+D:\XML_Project\Xml_to_Database\Xml_to_Database\bin\Debug\DataContextClassLibrary.dll
+D:\XML_Project\Xml_to_Database\Xml_to_Database\bin\Debug\Validation.dll
+D:\XML_Project\Xml_to_Database\Xml_to_Database\bin\Debug\DataContextClassLibrary.pdb
+D:\XML_Project\Xml_to_Database\Xml_to_Database\bin\Debug\Validation.pdb
+D:\XML_Project\Xml_to_Database\Xml_to_Database\obj\Debug\Xml_to_Database.csprojResolveAssemblyReference.cache
+D:\XML_Project\Xml_to_Database\Xml_to_Database\obj\Debug\Xml_to_Database.exe
+D:\XML_Project\Xml_to_Database\Xml_to_Database\obj\Debug\Xml_to_Database.pdb
